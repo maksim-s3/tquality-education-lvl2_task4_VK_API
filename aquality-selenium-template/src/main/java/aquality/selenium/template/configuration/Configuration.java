@@ -12,4 +12,8 @@ public class Configuration {
     public static String getApiUrl() {
         return Environment.getCurrentEnvironment().getValue("/apiUrl").toString();
     }
+
+    public static String getVersionApi(){
+        return Environment.getCurrentEnvironment().getValue("/version_api").toString();
+    }
 }
