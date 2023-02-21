@@ -1,5 +1,6 @@
 package aquality.selenium.template.utilities;
 
+import aquality.selenium.browser.AqualityServices;
 import lombok.experimental.UtilityClass;
 
 import javax.imageio.ImageIO;
@@ -31,12 +32,12 @@ public class FileHelper {
         }
     }
 
-    public static File downloadImage(String src, String fileName, String formatName){
+    public static File downloadImage(String src, String fileName, String formatName) {
         BufferedImage bufferedImage = null;
         File outputfile = null;
         try {
             bufferedImage = ImageIO.read(new URL(src));
-            outputfile = new File(fileName);
+            outputfile = new File(AqualityServices.getBrowser().getDownloadDirectory() + fileName);
             ImageIO.write(bufferedImage, formatName, outputfile);
         } catch (IOException e) {
             throw new RuntimeException(e);

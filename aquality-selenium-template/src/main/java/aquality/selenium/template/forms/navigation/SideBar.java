@@ -2,17 +2,16 @@ package aquality.selenium.template.forms.navigation;
 
 import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.forms.Form;
-import aquality.selenium.template.forms.navigation.ItemsMenuSideBar;
 import org.openqa.selenium.By;
 
 public class SideBar extends Form {
-    private String templateBtmMenu = "//*[contains(text(), 'Моя страница')]";
+    private String templateBtmMenu = "//*[@id='%s']//*[contains(@class, 'itemLabel')]";
     public SideBar() {
-        super(By.id("side_bar"), "menu side bar");
+        super(By.id("side_bar"), "left menu");
     }
 
     public void clickItemMenu(ItemsMenuSideBar item){
-        IButton btnMenu = getElementFactory().getButton(By.xpath(String.format(templateBtmMenu, item.getTitle())), "item '"+item.getTitle()+"' menu side bar");
+        IButton btnMenu = getElementFactory().getButton(By.xpath(String.format(templateBtmMenu, item)), "item '"+item+"' left menu");
         btnMenu.click();
     }
 }

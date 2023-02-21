@@ -12,5 +12,6 @@ public class Listener implements ITestListener {
 
     public void onTestSuccess(ITestResult result) {
         AllureHelper.takeLog();
+        AllureHelper.takeLog();
     }
 }

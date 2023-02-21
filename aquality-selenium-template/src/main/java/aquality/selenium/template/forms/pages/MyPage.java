@@ -5,6 +5,6 @@ import org.openqa.selenium.By;
 
 public class MyPage extends Form {
     public MyPage() {
-        super(By.id("profile_redesigned"), "my page");
+        super(By.id("profile_redesigned"), "my profile");
     }
 }

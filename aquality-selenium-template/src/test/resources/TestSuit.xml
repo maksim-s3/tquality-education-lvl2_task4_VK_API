@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="VK API" verbose="1">
-    <test name="Filling forms registration">
+    <test name="Working with posts and comments via API and UI">
         <parameter name="login" value="89964005980"></parameter>
         <parameter name="password" value="4D20K4Mrb32AJohnSteve"></parameter>
         <parameter name="ownerId" value="785261547"></parameter>

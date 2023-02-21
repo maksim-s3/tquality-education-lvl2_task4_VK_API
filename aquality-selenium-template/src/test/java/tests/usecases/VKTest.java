@@ -28,7 +28,7 @@ public class VKTest extends BaseTest {
         steps.assertTextOnTheWallFromCorrectUser(randomTextForPost,postId, ownerId);
 
         String newRandomTextForPost = Random.getRandomText();
-        steps.changeTextAndAddPictureInPost(postId, ownerId, newRandomTextForPost, image);
+        steps.editTextAndAddPictureInPost(postId, ownerId, newRandomTextForPost, image);
 
         steps.assertTextAndPicture(postId, ownerId, newRandomTextForPost, image);
 

@@ -2,14 +2,11 @@ package tests.steps;
 
 import aquality.selenium.template.configuration.Configuration;
 import aquality.selenium.template.forms.*;
-import aquality.selenium.template.forms.navigation.ItemsMenuSideBar;
-import aquality.selenium.template.forms.navigation.SideBar;
-import aquality.selenium.template.forms.pages.MyPage;
-import aquality.selenium.template.models.attachments.SavedPhoto;
-import aquality.selenium.template.models.attachments.UploadedPhoto;
-import aquality.selenium.template.models.post.UserPutLike;
-import aquality.selenium.template.utilities.CompareImage;
-import aquality.selenium.template.utilities.VkApiUtils;
+import aquality.selenium.template.forms.navigation.*;
+import aquality.selenium.template.forms.pages.*;
+import aquality.selenium.template.models.attachments.*;
+import aquality.selenium.template.models.post.*;
+import aquality.selenium.template.utilities.*;
 import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -41,7 +38,6 @@ public class Steps {
         loginEntryForm.setLogin(login);
         takeScreenshot();
         loginEntryForm.clickSignInButton();
-        passwordEntryForm.state().waitForDisplayed();
         passwordEntryForm.clickSwitchToPassword();
         passwordEntryForm.setPassword(password);
         takeScreenshot();
@@ -55,7 +51,7 @@ public class Steps {
         takeScreenshot();
     }
 
-    @Step("Using an API request, create a record with randomly generated text on the wall and get the record id from the response")
+    @Step("Using an API request, create a post with random message on the wall and get the post id from the response")
     public int getIdFromCreatedPostWithRandomTextOnTheWall(String message) {
         int postId = VkApiUtils.createPost(message);
         takeScreenshot();
@@ -70,9 +66,8 @@ public class Steps {
     }
 
     @Step("Edit an entry via an API request - change the text and add (upload) any image")
-    public void changeTextAndAddPictureInPost(int postId, int ownerId, String message, File image) {
-        UploadedPhoto uploadedPhoto = VkApiUtils.uploadPhoto(image);
-        SavedPhoto savedPhoto = VkApiUtils.saveWallPhoto(uploadedPhoto).getResponse().get(0);
+    public void editTextAndAddPictureInPost(int postId, int ownerId, String message, File image) {
+        SavedPhoto savedPhoto = VkApiUtils.saveWallPhoto(VkApiUtils.uploadPhoto(image)).getResponse().get(0);
         VkApiUtils.editPost(postId, ownerId, message, savedPhoto);
         takeScreenshot();
     }
@@ -81,7 +76,8 @@ public class Steps {
     public void assertTextAndPicture(int postId, int ownerId, String message, File image) {
         File imageFromPost = wallForm.getImageFromPost(postId, ownerId);
         Assert.assertEquals(wallForm.getTextFromPost(ownerId, postId), message);
-        Assert.assertTrue(CompareImage.isEquals(imageFromPost, image), "picture from disk does not match the picture from post");
+        softAssertion.assertTrue(CompareImage.isEquals(imageFromPost, image), "picture from disk does not match the picture from post");
+        takeScreenshot();
     }
 
     @Step("Using an API request to add a comment to an entry with random text")
@@ -119,7 +115,6 @@ public class Steps {
     public void deletePost(int ownerId, int postId) {
         takeScreenshot();
         VkApiUtils.deletePost(ownerId, postId);
-        takeScreenshot();
     }
 
     @Step("Without refreshing the page, make sure that the entry is deleted")

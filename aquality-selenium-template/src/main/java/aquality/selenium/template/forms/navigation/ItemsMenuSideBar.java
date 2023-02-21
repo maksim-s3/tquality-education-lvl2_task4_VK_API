@@ -1,7 +1,7 @@
 package aquality.selenium.template.forms.navigation;
 
 public enum ItemsMenuSideBar {
-    MY_PAGE("Моя страница");
+    MY_PAGE("l_pr");
 
     private final String title;
 
@@ -9,7 +9,7 @@ public enum ItemsMenuSideBar {
         this.title = title;
     }
 
-    public String getTitle() {
+    public String toString(){
         return title;
     }
 }
