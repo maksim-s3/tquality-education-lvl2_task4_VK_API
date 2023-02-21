@@ -32,18 +32,18 @@ public class VkApiUtils {
 
     public static int createPost(String message) {
         return given()
-                .spec(getBaseSpec())
-                .get(String.format(CREATE_POST, token, message, versionApi))
+                    .spec(getBaseSpec())
+                    .get(String.format(CREATE_POST, token, message, versionApi))
                 .then()
-                .extract().body().path("response.post_id");
+                    .extract().body().path("response.post_id");
     }
 
     private static String getUploadedServerForUploadImageToWall(){
         return given()
-                .spec(getBaseSpec())
-                .get(String.format(GET_URL_UPLOAD_SERVER, token, versionApi))
+                    .spec(getBaseSpec())
+                    .get(String.format(GET_URL_UPLOAD_SERVER, token, versionApi))
                 .then()
-                .extract().body().path("response.upload_url");
+                    .extract().body().path("response.upload_url");
     }
 
     public static UploadedPhoto uploadPhoto(File file){
@@ -57,42 +57,42 @@ public class VkApiUtils {
 
     public static ResponseArraySavedPhoto saveWallPhoto(UploadedPhoto uploadedPhoto){
         return given()
-                .spec(getBaseSpec())
-                .queryParam("photo", uploadedPhoto.getPhoto())
-                .post(String.format(SAVE_UPLOADED_PHOTO, token, uploadedPhoto.getServer(), uploadedPhoto.getHash(), versionApi))
+                    .spec(getBaseSpec())
+                    .queryParam("photo", uploadedPhoto.getPhoto())
+                    .post(String.format(SAVE_UPLOADED_PHOTO, token, uploadedPhoto.getServer(), uploadedPhoto.getHash(), versionApi))
                 .then()
-                .extract().body().jsonPath().getObject("", ResponseArraySavedPhoto.class);
+                    .extract().body().jsonPath().getObject("", ResponseArraySavedPhoto.class);
     }
 
     public static void editPost(int postId, int ownerId, String message, SavedPhoto savedPhoto){
         given()
-                .spec(getBaseSpec())
-                .get(String.format(EDIT_POST_WALL, token, ownerId, postId, message, Attachments.PHOTO, ownerId, savedPhoto.getId(), versionApi))
+                    .spec(getBaseSpec())
+                    .get(String.format(EDIT_POST_WALL, token, ownerId, postId, message, Attachments.PHOTO, ownerId, savedPhoto.getId(), versionApi))
                 .then()
-                .extract().body().path("response.post_id");
+                    .extract().body().path("response.post_id");
     }
 
     public static PostComments createComment(int postId, int ownerId, String message){
         return given()
-                .spec(getBaseSpec())
-                .get(String.format(CREATE_COMMENT_FOR_POST_IN_WALL, token, ownerId, postId, message, versionApi))
+                    .spec(getBaseSpec())
+                    .get(String.format(CREATE_COMMENT_FOR_POST_IN_WALL, token, ownerId, postId, message, versionApi))
                 .then()
-                .extract().body().jsonPath().getObject("response", PostComments.class);
+                    .extract().body().jsonPath().getObject("response", PostComments.class);
     }
 
     public static PostLikes getLikesPost(int ownerId, int postId){
         return given()
-                .spec(getBaseSpec())
-                .get(String.format(GET_LIKES_POST, token, ownerId, postId, versionApi))
+                    .spec(getBaseSpec())
+                    .get(String.format(GET_LIKES_POST, token, ownerId, postId, versionApi))
                 .then()
-                .extract().body().jsonPath().getObject("response", PostLikes.class);
+                    .extract().body().jsonPath().getObject("response", PostLikes.class);
     }
 
     public static void deletePost(int ownerId, int postId) {
         given()
-                .spec(getBaseSpec())
-                .get(String.format(DELETE_POST, token, ownerId, postId, versionApi))
+                    .spec(getBaseSpec())
+                    .get(String.format(DELETE_POST, token, ownerId, postId, versionApi))
                 .then()
-                .extract().body().path("response");
+                    .extract().body().path("response");
     }
 }
