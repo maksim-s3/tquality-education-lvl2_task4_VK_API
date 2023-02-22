@@ -6,6 +6,7 @@ import aquality.selenium.template.forms.navigation.*;
 import aquality.selenium.template.forms.pages.*;
 import aquality.selenium.template.models.attachments.*;
 import aquality.selenium.template.models.post.*;
+import aquality.selenium.template.rest_assured.VkApiUtils;
 import aquality.selenium.template.utilities.*;
 import io.qameta.allure.Step;
 import org.testng.Assert;
@@ -88,9 +89,10 @@ public class Steps {
     }
 
     @Step("Without refreshing the page, make sure that a comment from the correct user has been added to the desired entry")
-    public void assertCommentFromCorrectUser(int commentId, int ownerId, int postId, String randomTextForComment) {
+    public void assertExistCommentFromCorrectUser(int commentId, int ownerId, int postId, String randomTextForComment) {
         wallForm.clickShowNextComments(ownerId, postId);
         Assert.assertTrue(wallForm.isCommentExist(ownerId, commentId), "comment is not exist");
+
         int authorCommentId = wallForm.getIdAuthorComment(ownerId, commentId);
         String textComment = wallForm.getTextComment(ownerId, commentId);
         Assert.assertEquals(authorCommentId, ownerId, "author comment is not equals");

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,5 +15,5 @@ public class PostComments {
     @JsonProperty(value = "comment_id")
     private int commentId;
     @JsonProperty(value = "parents_stack")
-    private int[] parentsStack;
+    private List<Integer> parentsStack;
 }

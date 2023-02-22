@@ -1,6 +1,5 @@
 package aquality.selenium.template.models.attachments;
 
-
 public enum AttachmentTypes {
     PHOTO("photo");
 
@@ -13,5 +12,4 @@ public enum AttachmentTypes {
     public String toString(){
         return title;
     }
-
 }

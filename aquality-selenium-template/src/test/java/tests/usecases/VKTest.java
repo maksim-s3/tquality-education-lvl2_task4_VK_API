@@ -35,7 +35,7 @@ public class VKTest extends BaseTest {
         String randomTextForComment = Random.getRandomText();
         int commentId = steps.addComment(postId, ownerId, randomTextForComment);
 
-        steps.assertCommentFromCorrectUser(commentId, ownerId, postId, randomTextForComment);
+        steps.assertExistCommentFromCorrectUser(commentId, ownerId, postId, randomTextForComment);
 
         steps.likePost(ownerId, postId);
 

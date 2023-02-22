@@ -3,8 +3,8 @@ package tests;
 import aquality.selenium.browser.AqualityServices;
 import aquality.selenium.elements.interfaces.IElementFactory;
 import aquality.selenium.template.configuration.Configuration;
+import aquality.selenium.template.rest_assured.RestClient;
 import aquality.selenium.template.utilities.Listener;
-import aquality.selenium.template.utilities.VkApiUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -23,8 +23,8 @@ public abstract class BaseTest {
     @Parameters({"token"})
     @BeforeMethod
     protected void beforeMethod(String token) {
-        VkApiUtils.setToken(token);
-        VkApiUtils.setVersionApi(Configuration.getVersionApi());
+        RestClient.setToken(token);
+        RestClient.setVersionApi(Configuration.getVersionApi());
         getBrowser().maximize();
     }
 
