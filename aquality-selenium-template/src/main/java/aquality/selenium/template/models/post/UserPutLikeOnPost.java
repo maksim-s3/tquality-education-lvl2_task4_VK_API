@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPutLike {
+public class UserPutLikeOnPost {
     private int uid;
     private int copied;
 }

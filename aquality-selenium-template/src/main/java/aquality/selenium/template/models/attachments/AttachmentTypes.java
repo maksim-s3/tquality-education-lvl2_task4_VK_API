@@ -1,12 +1,12 @@
 package aquality.selenium.template.models.attachments;
 
 
-public enum Attachments {
+public enum AttachmentTypes {
     PHOTO("photo");
 
     private final String title;
 
-    Attachments(String title) {
+    AttachmentTypes(String title) {
         this.title = title;
     }
 

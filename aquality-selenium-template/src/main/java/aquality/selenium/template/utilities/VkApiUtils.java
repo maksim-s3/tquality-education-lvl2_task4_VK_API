@@ -1,13 +1,15 @@
 package aquality.selenium.template.utilities;
 
-import aquality.selenium.template.models.attachments.Attachments;
-import aquality.selenium.template.models.attachments.ResponseArraySavedPhoto;
+import aquality.selenium.template.models.attachments.Attachment;
+import aquality.selenium.template.models.attachments.AttachmentTypes;
 import aquality.selenium.template.models.attachments.SavedPhoto;
 import aquality.selenium.template.models.attachments.UploadedPhoto;
 import aquality.selenium.template.models.post.PostLikes;
 import aquality.selenium.template.models.post.PostComments;
 import io.restassured.http.ContentType;
 import java.io.File;
+import java.util.List;
+
 import static aquality.selenium.template.rest_assured.RestClient.getBaseSpec;
 import static io.restassured.RestAssured.given;
 
@@ -42,7 +44,7 @@ public class VkApiUtils {
                     .extract().body().path("response.post_id");
     }
 
-    private static String getUploadedServerForUploadImageToWall(){
+    private static String getWallUploadServer(){
         return given()
                     .spec(getBaseSpec())
                     .get(requestBuilder(GET_URL_UPLOAD_SERVER))
@@ -54,24 +56,24 @@ public class VkApiUtils {
         return given()
                     .contentType(ContentType.MULTIPART)
                     .multiPart("photo", file)
-                    .post(getUploadedServerForUploadImageToWall())
+                    .post(getWallUploadServer())
                 .then()
                     .extract().body().jsonPath().getObject("", UploadedPhoto.class);
     }
 
-    public static ResponseArraySavedPhoto saveWallPhoto(UploadedPhoto uploadedPhoto){
+    public static List<SavedPhoto> getSavedWallPhotos(UploadedPhoto uploadedPhoto){
         return given()
                     .spec(getBaseSpec())
-                    .queryParam(Attachments.PHOTO.toString(), uploadedPhoto.getPhoto())
+                    .queryParam(AttachmentTypes.PHOTO.toString(), uploadedPhoto.getPhoto())
                     .post(String.format(requestBuilder(SAVE_UPLOADED_PHOTO), uploadedPhoto.getServer(), uploadedPhoto.getHash()))
                 .then()
-                    .extract().body().jsonPath().getObject("", ResponseArraySavedPhoto.class);
+                    .extract().body().jsonPath().getList("response", SavedPhoto.class);
     }
 
-    public static void editPost(int postId, int ownerId, String message, SavedPhoto savedPhoto){
+    public static void editPostWithAttachment(int postId, int ownerId, String message, AttachmentTypes attachmentType, Attachment attachment){
         given()
                     .spec(getBaseSpec())
-                    .get(String.format(requestBuilder(EDIT_POST_WALL), ownerId, postId, message, Attachments.PHOTO, ownerId, savedPhoto.getId()))
+                    .get(String.format(requestBuilder(EDIT_POST_WALL), ownerId, postId, message, attachmentType, ownerId, attachment.getId()))
                 .then()
                     .extract().body().path("response.post_id");
     }

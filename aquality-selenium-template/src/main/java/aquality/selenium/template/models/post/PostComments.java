@@ -1,5 +1,6 @@
 package aquality.selenium.template.models.post;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostComments {
-    private int comment_id;
-    private int[] parents_stack;
+    @JsonProperty(value = "comment_id")
+    private int commentId;
+    @JsonProperty(value = "parents_stack")
+    private int[] parentsStack;
 }

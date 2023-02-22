@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class PostLikes {
     private int count;
-    private List<UserPutLike> users;
+    private List<UserPutLikeOnPost> users;
 }
