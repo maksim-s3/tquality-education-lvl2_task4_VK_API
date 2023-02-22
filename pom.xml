@@ -127,6 +127,16 @@
                     <parallel>classes</parallel>
                     <reuseForks>false</reuseForks>
                     <testFailureIgnore>false</testFailureIgnore>
+                    <systemPropertyVariables>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <token>${env.TOKEN}</token>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <owner_id>${env.OWNER_ID}</owner_id>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <login>${env.LOGIN}</login>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <password>${env.PASSWORD}</password>
+                    </systemPropertyVariables>
                     <suiteXmlFiles>
                         <!--suppress UnresolvedMavenProperty -->
                         <suiteXmlFile>src/test/resources/TestSuit.xml</suiteXmlFile>

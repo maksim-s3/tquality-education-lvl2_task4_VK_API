@@ -13,7 +13,7 @@ public class VKTest extends BaseTest {
     private File image = new File("src/test/resources/avatar.png");
 
     @Description("VK API")
-    @Parameters({"login", "password", "ownerId"})
+    @Parameters({"login", "password", "owner_id"})
     @Test
     public void test(String login, String password, int ownerId) {
         steps.goToAuthorizationPage();

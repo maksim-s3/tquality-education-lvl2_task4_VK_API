@@ -5,7 +5,6 @@
         <parameter name="login" value="89964005980"></parameter>
         <parameter name="password" value="4D20K4Mrb32AJohnSteve"></parameter>
         <parameter name="ownerId" value="785261547"></parameter>
-        <parameter name="token" value="vk1.a.TwKHqKytBCpeWikH2JTz1vjx5RU5CYaAeqibLowIWJSiZ1AQY2jWRbsK_zTUycJQ4MGxPZCcuG-o14lbLL4OpCG8WI2f0yAbmnyTVsJl3MAIAwKSllEQ-avi0VR7ZTfhpfJLXk1ZfcQO_J8Sb2XAi4pxCDIaMzauPCq7it3O_3Kju8s1KIAu2qA7b_pYkDOaBrwymBJVNY8Mljngy_N7gw"></parameter>
         <classes>
             <class name="tests.usecases.VKTest"/>
         </classes>
