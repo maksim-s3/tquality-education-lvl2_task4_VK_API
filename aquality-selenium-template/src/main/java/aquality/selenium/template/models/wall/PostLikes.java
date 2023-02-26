@@ -1,4 +1,4 @@
-package aquality.selenium.template.models.post;
+package aquality.selenium.template.models.wall;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

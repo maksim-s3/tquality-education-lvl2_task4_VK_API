@@ -1,11 +1,10 @@
 package aquality.selenium.template.rest_assured;
 
-import aquality.selenium.template.models.attachments.Attachment;
-import aquality.selenium.template.models.attachments.AttachmentTypes;
-import aquality.selenium.template.models.attachments.SavedPhoto;
-import aquality.selenium.template.models.attachments.UploadedPhoto;
-import aquality.selenium.template.models.post.PostLikes;
-import aquality.selenium.template.models.post.PostComments;
+import aquality.selenium.template.models.attachments.*;
+import aquality.selenium.template.models.wall.PostLikes;
+import aquality.selenium.template.models.wall.PostComments;
+import aquality.selenium.template.models.wall.WallEdit;
+import aquality.selenium.template.models.wall.WallPost;
 import io.restassured.http.ContentType;
 
 import java.io.File;
@@ -24,28 +23,28 @@ public class VkApiUtils {
     private static final String GET_LIKES_POST = "wall.getLikes";
     private static final String TEMPLATE_PARAM_ATTACHMENTS = "%s%d_%d";
 
-    public static int createPost(String message) {
+    public static WallPost createPost(String message) {
         return given()
                 .spec(getBaseSpec())
                 .queryParam(RequestParams.MESSAGE.toString(), message)
                 .get(CREATE_POST)
                 .then()
-                .extract().body().path("response.post_id");
+                .extract().body().jsonPath().getObject("", WallPost.class);
     }
 
-    private static String getWallUploadServer() {
+    private static WallUploadServer getWallUploadServer() {
         return given()
                 .spec(getBaseSpec())
                 .get(GET_URL_UPLOAD_SERVER)
                 .then()
-                .extract().body().path("response.upload_url");
+                .extract().body().jsonPath().getObject("", WallUploadServer.class);
     }
 
     public static UploadedPhoto uploadPhoto(File file) {
         return given()
                 .contentType(ContentType.MULTIPART)
                 .multiPart(RequestParams.PHOTO.toString(), file)
-                .post(getWallUploadServer())
+                .post(getWallUploadServer().getNestedWallUploadServer().getUploadUrl())
                 .then()
                 .extract().body().jsonPath().getObject("", UploadedPhoto.class);
     }
@@ -61,8 +60,8 @@ public class VkApiUtils {
                 .extract().body().jsonPath().getList("response", SavedPhoto.class);
     }
 
-    public static void editPostWithAttachment(int postId, int ownerId, String message, AttachmentTypes attachmentType, Attachment attachment) {
-        given()
+    public static WallEdit editPostWithAttachment(int postId, int ownerId, String message, AttachmentTypes attachmentType, Attachment attachment) {
+        return given()
                 .spec(getBaseSpec())
                 .queryParam(RequestParams.OWNER_ID.toString(), ownerId)
                 .queryParam(RequestParams.POST_ID.toString(), postId)
@@ -70,7 +69,7 @@ public class VkApiUtils {
                 .queryParam(RequestParams.ATTACHMENTS.toString(), String.format(TEMPLATE_PARAM_ATTACHMENTS, attachmentType, ownerId, attachment.getId()))
                 .get(EDIT_POST_WALL)
                 .then()
-                .extract().body().path("response.post_id");
+                .extract().body().jsonPath().getObject("", WallEdit.class);
     }
 
     public static PostComments createComment(int postId, int ownerId, String message) {

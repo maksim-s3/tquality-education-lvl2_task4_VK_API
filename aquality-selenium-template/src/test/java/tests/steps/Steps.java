@@ -5,7 +5,7 @@ import aquality.selenium.template.forms.*;
 import aquality.selenium.template.forms.navigation.*;
 import aquality.selenium.template.forms.pages.*;
 import aquality.selenium.template.models.attachments.*;
-import aquality.selenium.template.models.post.*;
+import aquality.selenium.template.models.wall.*;
 import aquality.selenium.template.rest_assured.VkApiUtils;
 import aquality.selenium.template.utilities.*;
 import io.qameta.allure.Step;
@@ -54,9 +54,9 @@ public class Steps {
 
     @Step("Using an API request, create a post with random message on the wall and get the post id from the response")
     public int getIdFromCreatedPostWithRandomTextOnTheWall(String message) {
-        int postId = VkApiUtils.createPost(message);
+        WallPost post = VkApiUtils.createPost(message);
         takeScreenshot();
-        return postId;
+        return post.getNestedWallPost().getPostId();
     }
 
     @Step("Without refreshing the page, make sure that an entry with the right text from the right user has appeared on the wall")
