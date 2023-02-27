@@ -68,8 +68,8 @@ public class Steps {
 
     @Step("Edit an entry via an API request - change the text and add (upload) any image")
     public void editTextAndAddPictureInPost(int postId, int ownerId, String message, File image) {
-        List<SavedPhoto> savedPhotos = VkApiUtils.getSavedWallPhotos(VkApiUtils.uploadPhoto(image));
-        VkApiUtils.editPostWithAttachment(postId, ownerId, message, AttachmentTypes.PHOTO,savedPhotos.get(0));
+        SavedWallPhoto savedWallPhotos = VkApiUtils.getSavedWallPhotos(VkApiUtils.uploadPhoto(image));
+        VkApiUtils.editPostWithAttachment(postId, ownerId, message, AttachmentTypes.PHOTO, savedWallPhotos.getNestedSavedWallPhotos().get(0));
         takeScreenshot();
     }
 
@@ -83,9 +83,9 @@ public class Steps {
 
     @Step("Using an API request to add a comment to an entry with random text")
     public int addComment(int postId, int ownerId, String message) {
-        int commentId = VkApiUtils.createComment(postId, ownerId, message).getCommentId();
+        CreatedComment createdComment = VkApiUtils.createComment(postId, ownerId, message);
         takeScreenshot();
-        return commentId;
+        return createdComment.getNestedComment().getCommentId();
     }
 
     @Step("Without refreshing the page, make sure that a comment from the correct user has been added to the desired entry")
@@ -108,7 +108,7 @@ public class Steps {
 
     @Step("Through an API request, make sure that the record has a like from the correct user")
     public void assertLikePostFromCorrectUser(int ownerId, int postId) {
-        List<UserPutLikeOnPost> users = VkApiUtils.getLikesPost(ownerId, postId).getUsers();
+        List<UserPutLikeOnPost> users = VkApiUtils.getLikesPost(ownerId, postId).getNestedGetLikes().getUsers();
         boolean isUser = users.stream().anyMatch(user -> ownerId==user.getUid());
         Assert.assertTrue(isUser, "there is no user in the list of likes");
     }

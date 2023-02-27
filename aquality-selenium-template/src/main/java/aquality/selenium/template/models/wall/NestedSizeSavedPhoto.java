@@ -1,4 +1,4 @@
-package aquality.selenium.template.models.attachments;
+package aquality.selenium.template.models.wall;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SizeSavedPhoto {
+public class NestedSizeSavedPhoto {
     private int height;
     private String type;
     private int width;

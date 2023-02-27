@@ -1,4 +1,4 @@
-package aquality.selenium.template.models.attachments;
+package aquality.selenium.template.models.wall;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

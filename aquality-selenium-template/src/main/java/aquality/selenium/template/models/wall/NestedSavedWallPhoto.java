@@ -1,5 +1,6 @@
-package aquality.selenium.template.models.attachments;
+package aquality.selenium.template.models.wall;
 
+import aquality.selenium.template.models.attachments.Attachment;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SavedPhoto extends Attachment{
+public class NestedSavedWallPhoto extends Attachment {
     @JsonProperty(value = "album_id")
     private int albumId;
     private int date;
@@ -20,7 +21,7 @@ public class SavedPhoto extends Attachment{
     private int ownerId;
     @JsonProperty(value = "access_key")
     private String accessKey;
-    private ArrayList<SizeSavedPhoto> sizes;
+    private ArrayList<NestedSizeSavedPhoto> sizes;
     private String text;
     @JsonProperty(value = "has_tags")
     private boolean hasTags;

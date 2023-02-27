@@ -1,15 +1,9 @@
 package aquality.selenium.template.rest_assured;
 
 import aquality.selenium.template.models.attachments.*;
-import aquality.selenium.template.models.wall.PostLikes;
-import aquality.selenium.template.models.wall.PostComments;
-import aquality.selenium.template.models.wall.WallEdit;
-import aquality.selenium.template.models.wall.WallPost;
+import aquality.selenium.template.models.wall.*;
 import io.restassured.http.ContentType;
-
 import java.io.File;
-import java.util.List;
-
 import static aquality.selenium.template.rest_assured.RestClient.getBaseSpec;
 import static io.restassured.RestAssured.given;
 
@@ -49,7 +43,7 @@ public class VkApiUtils {
                 .extract().body().jsonPath().getObject("", UploadedPhoto.class);
     }
 
-    public static List<SavedPhoto> getSavedWallPhotos(UploadedPhoto uploadedPhoto) {
+    public static SavedWallPhoto getSavedWallPhotos(UploadedPhoto uploadedPhoto) {
         return given()
                 .spec(getBaseSpec())
                 .queryParam(AttachmentTypes.PHOTO.toString(), uploadedPhoto.getPhoto())
@@ -57,7 +51,7 @@ public class VkApiUtils {
                 .queryParam(RequestParams.HASH.toString(), uploadedPhoto.getHash())
                 .post(SAVE_UPLOADED_PHOTO)
                 .then()
-                .extract().body().jsonPath().getList("response", SavedPhoto.class);
+                .extract().body().jsonPath().getObject("", SavedWallPhoto.class);
     }
 
     public static WallEdit editPostWithAttachment(int postId, int ownerId, String message, AttachmentTypes attachmentType, Attachment attachment) {
@@ -72,7 +66,7 @@ public class VkApiUtils {
                 .extract().body().jsonPath().getObject("", WallEdit.class);
     }
 
-    public static PostComments createComment(int postId, int ownerId, String message) {
+    public static CreatedComment createComment(int postId, int ownerId, String message) {
         return given()
                 .spec(getBaseSpec())
                 .queryParam(RequestParams.OWNER_ID.toString(), ownerId)
@@ -80,17 +74,17 @@ public class VkApiUtils {
                 .queryParam(RequestParams.MESSAGE.toString(), message)
                 .get(CREATE_COMMENT_FOR_POST_IN_WALL)
                 .then()
-                .extract().body().jsonPath().getObject("response", PostComments.class);
+                .extract().body().jsonPath().getObject("", CreatedComment.class);
     }
 
-    public static PostLikes getLikesPost(int ownerId, int postId) {
+    public static GetLikes getLikesPost(int ownerId, int postId) {
         return given()
                 .spec(getBaseSpec())
                 .queryParam(RequestParams.OWNER_ID.toString(), ownerId)
                 .queryParam(RequestParams.POST_ID.toString(), postId)
                 .get(GET_LIKES_POST)
                 .then()
-                .extract().body().jsonPath().getObject("response", PostLikes.class);
+                .extract().body().jsonPath().getObject("", GetLikes.class);
     }
 
     public static void deletePost(int ownerId, int postId) {
@@ -98,8 +92,6 @@ public class VkApiUtils {
                 .spec(getBaseSpec())
                 .queryParam(RequestParams.OWNER_ID.toString(), ownerId)
                 .queryParam(RequestParams.POST_ID.toString(), postId)
-                .get(DELETE_POST)
-                .then()
-                .extract().body().path("response");
+                .get(DELETE_POST);
     }
 }
