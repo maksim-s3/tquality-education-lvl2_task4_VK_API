@@ -1,4 +1,5 @@
 {
-  "startUrl": "https://www.a1qa.com/",
-  "apiUrl": "https://api.github.com/"
+  "startUrl": "https://www.vk.com/",
+  "apiUrl": "https://api.vk.com/method/",
+  "version_api": "5.131"
 }
